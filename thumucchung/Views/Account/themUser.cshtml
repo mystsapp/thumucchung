@@ -1,0 +1,107 @@
+﻿@model thumucchung.Models.EF.user
+
+@{
+    Layout = null;
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Asset/js/themUserControl.js"></script>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>themUser</title>
+</head>
+<body>
+    @using (Html.BeginForm("themuser", "Account", FormMethod.Post, new { @id="frmThemUser"}))
+    {
+        @Html.AntiForgeryToken()
+    <fieldset>
+        <legend>Thêm nhân viên</legend>
+        <div class="form-group row">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+            <div class="col-md-4">
+                Khối/ phòng:
+                @Html.DropDownListFor(model => model.phongban, (IEnumerable<SelectListItem>)ViewBag.phongban, new { @class = "form-control", @id = "ddphongban" })
+                @Html.ValidationMessageFor(model => model.phongban, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-4">
+                Tên đăng nhập:
+                @Html.TextBoxFor(model => model.username, new { @class = "form-control", @id = "txtusername" })
+                @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-4">
+                Mật khẩu:
+                @Html.PasswordFor(model => model.password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="col-md-6">
+                Họ tên:
+                @Html.TextBoxFor(model => model.fullName, new { @class = "form-control text-uppercase", @id = "txtHoten" })
+                @Html.ValidationMessageFor(model => model.fullName, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3">
+                Hiển thị thư mục:
+                @Html.DropDownListFor(model => model.show, (SelectList)ViewBag.truycap, new { @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                Upload File:
+                @Html.DropDownListFor(model => model.upload, (SelectList)ViewBag.upload, new { @class = "form-control" })
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-3">
+                Chi nhánh:
+                @Html.DropDownListFor(model => model.chinhanh, (SelectList)ViewBag.chinhanh, new { @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                Đổi mật khẩu?
+                @Html.DropDownListFor(model => model.doimk, (IEnumerable<SelectListItem>)ViewBag.doimk, new { @class = "form-control" })
+            </div>
+            <div class="col-md-2">
+                Khách đoàn:
+                @Html.DropDownListFor(model => model.adminkd, (SelectList)ViewBag.adminkd, new { @class = "form-control" })
+            </div>
+            <div class="col-md-2">
+                Khách lẽ:
+                @Html.DropDownListFor(model => model.adminkl, (SelectList)ViewBag.adminkl, new { @class = "form-control" })
+            </div>
+            <div class="col-md-2">
+                Trạng thái:
+                @Html.DropDownListFor(model => model.trangthai, (SelectList)ViewBag.trangthai, new { @class = "form-control" })
+            </div>
+            <div class="col-md-4">
+                Email:
+                @Html.TextBoxFor(model => model.email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-5">
+                Đường dẫn thư mục:
+                @Html.TextBoxFor(model => model.dirPathName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.dirPathName, "", new { @class = "text-danger" })
+            </div>
+
+
+            <div class="col-md-3">
+                Quyền hạn:
+                @Html.DropDownListFor(model => model.role, (SelectList)ViewBag.quyen, new { @class = "form-control" })
+            </div>
+
+            <br /><br />
+
+            <div class="col-md-12">
+                <input type="button" id="btThem" value="Tạo" class="btn btn-primary" />
+                <a class="btn btn-primary" href="/Account">Hủy</a>
+            </div>
+
+        </div>
+</fieldset>
+        }
+</body>
+</html>
+

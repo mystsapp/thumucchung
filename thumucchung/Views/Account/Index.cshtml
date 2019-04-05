@@ -1,0 +1,97 @@
+﻿@model PagedList.IPagedList<thumucchung.Models.EF.user>
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Asset/js/accountControl.js"></script>
+    <link href="~/Asset/css/alert.css" rel="stylesheet" />
+    <script>
+        $(document).ready(function () {
+            $('tr.tbnhanvien').each(function () {
+                var dongtour = $(this).data('trangthai');
+                //alert(dongtour);
+                if (!dongtour) {
+                    $(this).css("background-color", "#FF0000");
+                }
+                else {
+                    $(this).css("background-color", "white")
+                }
+            });
+        });
+    </script>
+}
+<div id="tour_top" class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            DANH SÁCH NHÂN VIÊN
+        </div>
+        <div class="panel-body">
+            @using (Html.BeginForm("Index", "Account", FormMethod.Get))
+            {
+                <div class="row form-group">
+                    <div class="col-xs-12">
+                        <div class="col-xs-6">
+                            <div class="input-group">
+                                <input type="text" value="@ViewBag.searchstring" name="searchstring" class="form-control" placeholder="Tìm thông tin..." />
+                                <span class="input-group-btn">
+                                    <button type="submit" id="btSearchTour" class="btn btn-default"><i class="fa fa-search"></i></button>
+
+                                    <button type="button" id="btThemUser" data-toggle="tooltip" data-placement="right" title="Thêm user" class="btn btn-primary"><i class="fa fa-user-plus"></i></button>                                    <a href="#" data-toggle="tooltip" data-placement="right" class="btn btn-primary huychon" title="Quay lại"><i class="glyphicon glyphicon-backward"></i></a>
+
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <!--Danh sách nhân viên-->
+            <div class="col-sm-12 col-md-12 table-responsive" id="dsuser" style="overflow-x: auto">
+                <table class="table table-striped table-bordered table-hover table-condensed text-nowrap">
+                    <thead class="text-capitalize" style="font-weight:bold;">
+                        <tr>
+                            <th class="text-center"><i class="fa fa-gear"></i></th>
+                            <td>Tên đăng nhập</td>
+                            <td>Họ tên</td>
+                            <td>Khối / Phòng</td>
+                            <td>Email</td>
+                            <td>Chi nhánh</td>
+                            <td>Quyền hạn</td>
+                            <td>Trạng thái</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr id="row_@item.username" class="tbnhanvien" data-trangthai="@item.trangthai">
+                                <td class="text-center">
+                                    @*<span data-toggle="tooltip" data-placement="right" title="Cập nhật nhân viên" class="updateUser" data-username="@item.username" data-phongban="@item.phongban"><i class=" fa fa-edit"></i></span>*@
+                                    <a href="#" data-toggle="tooltip" class="updateUser" data-username="@item.username" data-placement="right" title="Cập nhật nhân viên"><i class="fa fa-edit"></i></a>
+                                    |
+                                    <a href="#" data-toggle="tooltip" class="delUser" data-username="@item.username" data-placement="right" title="Cập nhật nhân viên"><i class="fa fa-trash"></i></a>
+                                </td>
+                                <td>@item.username</td>
+                                <td>@item.fullName</td>
+                                <td>@item.phongban</td>
+                                <td>@item.email</td>
+                                <td>@item.chinhanh</td>
+                                <td>@item.role</td>
+                                <td>
+                                    <a href="#" class="btn-active" data-toggle="tooltip" data-placement="bottom" title="Nhấn để thay đổi trạng thái" data-username="@item.username">@Html.Raw(item.trangthai ? "Kích hoạt" : "Khoá")</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchstring = @ViewBag.searchstring }))
+            </div>
+            <!--/Danh sách nhân viên-->
+            <div class="them_user" style="margin-left:15px; margin-right:15px"></div>
+
+        </div>
+    </div>
+</div>
+<a href="#tour-top" id="toTop" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>

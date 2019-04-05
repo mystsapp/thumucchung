@@ -1,0 +1,206 @@
+﻿@using thumucchung.Models.EF
+@using thumucchung.Models;
+@using System.Collections
+@using thumucchung.Controllers
+@model thumucchung.Models.ExplorerModel
+
+@{Uri uri = Request.Url;}
+
+@{
+    ViewBag.Title = "Home Page";
+}
+@section scripts{
+    <link href="~/Asset/css/thumuc.css" rel="stylesheet" />
+    <script src="~/Asset/js/upfileControl.js"></script>
+    <script src="~/Asset/js/createFolderControl.js"></script>
+    <link href="~/Asset/css/alert.css" rel="stylesheet" />
+
+    <link href="~/Content/imgThumb/style.css" rel="stylesheet" />
+    <link href="~/Content/imgThumb/etalage.css" rel="stylesheet" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+    <script src="~/Scripts/imgThumb/jquery.etalage.min.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+
+            $('#etalage').etalage({
+                thumb_image_width: 300,
+                thumb_image_height: 400,
+                source_image_width: 900,
+                source_image_height: 1200,
+                show_hint: true,
+                click_callback: function (image_anchor, instance_id) {
+                    alert('Callback example:\nYou clicked on an image with the anchor: "' + image_anchor + '"\n(in Etalage instance: "' + instance_id + '")');
+                }
+            });
+
+        });
+    </script>
+
+    <script>
+      //  document.addEventListener('contextmenu', event => event.preventDefault());
+
+        function ShowFolders(path) {
+       // debugger
+
+            var path = encodeURI(path);
+            var url = '@Url.Action("Index", "Home")?path=' + path;
+        $.get(url, function (d) {
+            if (d && typeof d !== 'undefined') {
+
+                $('#data').html(d);
+            }
+        });
+
+        }
+
+    </script>
+}
+<div class="row">
+    <div class="col-md-10 col-md-offset-2">
+        <h4 style="color:red">   @Session["thongbao"]</h4>
+    </div>
+</div>
+<div class="row" id="show">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel panel-heading">
+                DANH SÁCH THƯ MỤC
+            </div>
+            <div class="panel panel-body">
+                @{
+                    string duongdan = ViewBag.home;
+                    bool uploaduser = duongdan.Contains(Session["chinhanh"].ToString() + "/USERS/" + ViewBag.username) ? true : false;
+                    bool uploadchinhanh = ViewBag.upload;
+                }
+
+                @*@if (a.Contains(Session["chinhanh"].ToString()) )*@
+                @if (uploaduser || uploadchinhanh)
+                {
+                    <div class="row">
+                        <button type="button" id="btupfile" class="btn btn-primary" data-path="@ViewBag.path">Upload File</button>
+                        <button type="button" id="btCreateFolder" class="btn btn-primary">Tạo thư mục</button>
+                    </div>
+                }
+                <div class="row">
+                    <strong>@ViewBag.home</strong>
+                    <br />
+                    <br />
+                    @if (uri.AbsolutePath.ToLower() != ViewBag.ftp)
+                    {
+                        @*Making a URL to going up one level. *@
+                        <a title="Parent"
+                           href="@uri.AbsoluteUri.Remove(uri.AbsoluteUri.Length - uri.Segments[uri.Segments.Length -1].Length - uri.Query.Length)">
+                            <img src="/Content/image/up.png" alt="Up" style="width: 32px; height: 32px; border: none" />
+                        </a>
+                    }
+                </div>
+
+                <div class="row">
+                    @if (Model != null)
+                    {
+                        <div class="col-md-12">
+                            @if (Model.dirModelList != null)
+                            {
+                                foreach (thumucchung.Models.DirModel dir in Model.dirModelList)
+                                {
+                                    string sFlagImg = Url.Content(dir.FlagUrl);
+                                    <div class="category">
+                                        <div>
+                                            <a href="#" onclick="ShowFolders('@Url.Encode(dir.FullDirName)')" title="@dir.DirName">
+                                                <img src="@sFlagImg" alt="Folder Logo" align="top" style="width: 72px;height: 72px; border: none" />
+                                            </a>
+                                        </div>
+                                        @{
+                                            string thumuc = dir.DirName.ToString();
+
+                                            if (thumuc.Length > 10)
+                                            {
+                                                //int index1 = dir.DirName.IndexOf(" ");
+                                                //int index2 = dir.DirName.IndexOf(" ", index1 + 2);
+                                                thumuc = thumuc.Substring(0, 9) + "..";
+                                            }
+
+                                        }
+                                        <div class="name"><a href="#" onclick="ShowFolders('@Url.Encode(dir.FullDirName)')" title="@dir.DirName">  @thumuc</a></div>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                        <hr />
+                        <div class="row">
+
+                            <div class="col-md-9 col-md-offset-1"><strong>File Name</strong></div>
+
+                            <div class="col-md-2"><strong>Size</strong></div>
+
+                        </div>
+                        <hr />
+
+                        <div class="row">
+
+                            @if (Model.fileModelList != null)
+                            {
+                                foreach (thumucchung.Models.FileModel file in Model.fileModelList)
+                                {
+                                    string sIcon = TrUtility.GetIconFile(file.FileExt);
+                                    string ext = file.FileExt.ToLower();
+                            <div class="col-md-9 col-md-offset-1">
+
+                                @{
+                                    string encodePath = file.ParentFileDir + "/" + file.FileName;
+
+                                    //var encodePath1 = encodePath;
+                                    string googledrive = encodePath.Replace("ftp://intranet.appsgt.net:4200/", "http://appsgt.net:1234/document/");
+
+                                    encodePath = encodePath.Replace(":", "aabbccddee");
+                                    encodePath = encodePath.Replace("/", "asdfghjkl");
+                                    encodePath = encodePath.Replace("+", "aqwsedrf");
+                                }
+                                <a href="@Url.Action("downFile", "Home",new { path = encodePath })" target="_blank">
+                                    <img src="@Url.Content("~/Content/image/download_icon.png")" width="32" height="32" title="Download" />
+                                </a>
+                                @if (ext == "jpg")
+                                {
+                                   
+                                            <a href="@Url.Action("readFile", "Home",new { path = encodePath })" target="_blank">
+                                                @*<img src="~/Content/image/@sIcon" alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />*@
+                                                <img src="@googledrive" @*class="etalage_source_image etalage_thumb_image"*@ alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />
+                                                
+                                                <span>@file.FileName</span>
+                                            </a>
+                         
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("readFile", "Home",new { path = encodePath })" target="_blank">
+                                        <img src="~/Content/image/@sIcon" alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />
+                                        @*<img src="@googledrive" alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />*@
+
+                                        <span>@file.FileName</span>
+                                    </a>
+                                }
+
+                            </div>
+
+                                    <div class="col-md-2">
+                                        @file.FileSizeText
+                                    </div>
+
+                                }
+
+                            }
+                        </div>
+                    }
+                </div>
+            </div><!--/ panel body-->
+
+        </div>
+    </div>
+</div>
+
+
+@RenderPage("uploadFile.cshtml");
+@RenderPage("createFolder.cshtml");
