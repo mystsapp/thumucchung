@@ -22,6 +22,11 @@ namespace thumucchung.Controllers
         //string FlagUrl= "/Content/image/folder.png";
         string phongban,username,chinhanh = "";
 
+        public ActionResult Test()
+        {
+            return View();
+        }
+
         public ActionResult Index(string path)
         {
             bool upload = false;

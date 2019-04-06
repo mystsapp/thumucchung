@@ -1,0 +1,58 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>iG Hoverzoom v1</title>
+
+    <link href="~/Content/imgThumb/etalage.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="~/Scripts/imgThumb/jquery.etalage.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#etalage').etalage({
+                zoom_element: '#custom_zoom_element',
+                thumb_image_width: 100,
+                thumb_image_height: 100,
+                //source_image_width: 900,
+                //source_image_height: 1200
+                 zoom_area_width: 900,
+                 zoom_area_height: 1200
+            });
+        });
+    </script>
+    <style>
+        body {
+            margin: 50px;
+        }
+
+        #etalage {
+            margin-right: 50px;
+        }
+
+        #custom_zoom_element {
+            position: absolute;
+            top: 165px;
+            left: 340px;
+        }
+    </style>
+
+</head>
+<body>
+
+    @*<img src="~/Content/image/logo-color-big.png" />*@
+
+    <ul id="etalage">
+        <li>
+            <img class="etalage_thumb_image" src="~/Content/image/logo-color-big.png">
+            <img class="etalage_source_image" src="~/Content/image/logo-color-big.png">
+        </li>
+    </ul>
+
+</body>
+
+
+</html>

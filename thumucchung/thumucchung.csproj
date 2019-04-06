@@ -170,6 +170,7 @@
     <Content Include="Asset\js\accountControl.js" />
     <Content Include="Asset\js\bootbox.min.js" />
     <Content Include="Asset\js\capnhatUserControl.js" />
+    <Content Include="Asset\js\imgThumbController.js" />
     <Content Include="Asset\js\createFolderControl.js" />
     <Content Include="Asset\js\themUserControl.js" />
     <Content Include="Asset\js\upfileControl.js" />
@@ -550,6 +551,7 @@
     <Content Include="Views\Home\createFolder.cshtml" />
     <Content Include="Views\Driver\Index.cshtml" />
     <Content Include="Views\Login\changepass.cshtml" />
+    <Content Include="Views\Home\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

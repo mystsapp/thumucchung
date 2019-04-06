@@ -15,28 +15,7 @@
     <script src="~/Asset/js/createFolderControl.js"></script>
     <link href="~/Asset/css/alert.css" rel="stylesheet" />
 
-    <link href="~/Content/imgThumb/style.css" rel="stylesheet" />
-    <link href="~/Content/imgThumb/etalage.css" rel="stylesheet" />
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
-
-    <script src="~/Scripts/imgThumb/jquery.etalage.min.js"></script>
-    <script>
-        jQuery(document).ready(function ($) {
-
-            $('#etalage').etalage({
-                thumb_image_width: 300,
-                thumb_image_height: 400,
-                source_image_width: 900,
-                source_image_height: 1200,
-                show_hint: true,
-                click_callback: function (image_anchor, instance_id) {
-                    alert('Callback example:\nYou clicked on an image with the anchor: "' + image_anchor + '"\n(in Etalage instance: "' + instance_id + '")');
-                }
-            });
-
-        });
-    </script>
+    <script src="~/Asset/js/imgThumbController.js"></script>
 
     <script>
       //  document.addEventListener('contextmenu', event => event.preventDefault());
@@ -57,6 +36,37 @@
 
     </script>
 }
+
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .thumbImage1 {
+        /*padding-right: 150px;*/
+        /*background-color: green;*/
+        transition: transform .2s;
+        /*width: 100px;
+            height: 100px;*/
+        /*margin: 0 auto;*/
+        /*transition: all .2s ease-in-out;*/
+        /*float:right;*/
+        transform: scale(5.5);
+    }
+
+    .thumbImage:hover {
+        /*-ms-transform: scale(1.5);  IE 9 */
+        -webkit-transform: scale(1.5); /* Safari 3-8 */
+        transform: scale(5.5);
+    }
+
+    .colmd91 {
+        min-height: 100px;
+    }
+</style>
+
+
 <div class="row">
     <div class="col-md-10 col-md-offset-2">
         <h4 style="color:red">   @Session["thongbao"]</h4>
@@ -147,48 +157,50 @@
                                 {
                                     string sIcon = TrUtility.GetIconFile(file.FileExt);
                                     string ext = file.FileExt.ToLower();
-                            <div class="col-md-9 col-md-offset-1">
+                            <div class="colmd92">
+                                <div class="col-md-9 col-md-offset-1">
 
-                                @{
-                                    string encodePath = file.ParentFileDir + "/" + file.FileName;
+                                    @{
+                                        string encodePath = file.ParentFileDir + "/" + file.FileName;
 
-                                    //var encodePath1 = encodePath;
-                                    string googledrive = encodePath.Replace("ftp://intranet.appsgt.net:4200/", "http://appsgt.net:1234/document/");
+                                        //var encodePath1 = encodePath;
+                                        string googledrive = encodePath.Replace("ftp://intranet.appsgt.net:4200/", "http://appsgt.net:1234/document/");
 
-                                    encodePath = encodePath.Replace(":", "aabbccddee");
-                                    encodePath = encodePath.Replace("/", "asdfghjkl");
-                                    encodePath = encodePath.Replace("+", "aqwsedrf");
-                                }
-                                <a href="@Url.Action("downFile", "Home",new { path = encodePath })" target="_blank">
-                                    <img src="@Url.Content("~/Content/image/download_icon.png")" width="32" height="32" title="Download" />
-                                </a>
-                                @if (ext == "jpg")
-                                {
-                                   
-                                            <a href="@Url.Action("readFile", "Home",new { path = encodePath })" target="_blank">
-                                                @*<img src="~/Content/image/@sIcon" alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />*@
-                                                <img src="@googledrive" @*class="etalage_source_image etalage_thumb_image"*@ alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />
-                                                
-                                                <span>@file.FileName</span>
-                                            </a>
-                         
-                                }
-                                else
-                                {
-                                    <a href="@Url.Action("readFile", "Home",new { path = encodePath })" target="_blank">
-                                        <img src="~/Content/image/@sIcon" alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />
-                                        @*<img src="@googledrive" alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />*@
-
-                                        <span>@file.FileName</span>
+                                        encodePath = encodePath.Replace(":", "aabbccddee");
+                                        encodePath = encodePath.Replace("/", "asdfghjkl");
+                                        encodePath = encodePath.Replace("+", "aqwsedrf");
+                                    }
+                                    <a href="@Url.Action("downFile", "Home",new { path = encodePath })" target="_blank">
+                                        <img src="@Url.Content("~/Content/image/download_icon.png")" width="32" height="32" title="Download" />
                                     </a>
-                                }
+                                    @if (ext == "jpg")
+                                    {
 
+                                        <a href="@Url.Action("readFile", "Home",new { path = encodePath })" target="_blank">
+                                            @*<img src="~/Content/image/@sIcon" alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />*@
+                                            <img src="@googledrive" class="thumbImage" data-id="@googledrive" style="width: 32px;height: 32px; border: none" title="Xem file" />
+
+                                            <span>@file.FileName</span>
+                                        </a>
+
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("readFile", "Home",new { path = encodePath })" target="_blank">
+                                            <img src="~/Content/image/@sIcon" alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />
+                                            @*<img src="@googledrive" alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />*@
+
+                                            <span>@file.FileName</span>
+                                        </a>
+                                    }
+
+                                </div>
+
+
+                                <div class="col-md-2">
+                                    @file.FileSizeText
+                                </div>
                             </div>
-
-                                    <div class="col-md-2">
-                                        @file.FileSizeText
-                                    </div>
-
                                 }
 
                             }
