@@ -468,6 +468,8 @@
     <Content Include="Content\gijgo\fonts\gijgo-material.eot" />
     <Content Include="Content\gijgo\fonts\gijgo-material.ttf" />
     <Content Include="Content\gijgo\fonts\gijgo-material.woff" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\gijgo\combined\gijgo.js" />
     <Content Include="Scripts\gijgo\combined\gijgo.min.js" />
