@@ -320,7 +320,6 @@
     <Content Include="Content\image\favicon.png" />
     <Content Include="Content\image\folder-close-icon48.png" />
     <Content Include="Content\image\folder.png" />
-    <Content Include="Content\image\iconfinder_pdf_272699.png" />
     <Content Include="Content\image\if_folder-close_173016.png" />
     <Content Include="Content\image\if_Preview_71060.png" />
     <Content Include="Content\image\logo-color-big.png" />
@@ -468,8 +467,8 @@
     <Content Include="Content\gijgo\fonts\gijgo-material.eot" />
     <Content Include="Content\gijgo\fonts\gijgo-material.ttf" />
     <Content Include="Content\gijgo\fonts\gijgo-material.woff" />
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\TMC.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\gijgo\combined\gijgo.js" />
     <Content Include="Scripts\gijgo\combined\gijgo.min.js" />

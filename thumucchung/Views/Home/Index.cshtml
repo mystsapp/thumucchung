@@ -157,50 +157,50 @@
                                 {
                                     string sIcon = TrUtility.GetIconFile(file.FileExt);
                                     string ext = file.FileExt.ToLower();
-                            <div class="colmd92">
-                                <div class="col-md-9 col-md-offset-1">
+                                    <div class="colmd92">
+                                        <div class="col-md-9 col-md-offset-1">
 
-                                    @{
-                                        string encodePath = file.ParentFileDir + "/" + file.FileName;
+                                            @{
+                                                string encodePath = file.ParentFileDir + "/" + file.FileName;
 
-                                        //var encodePath1 = encodePath;
-                                        string googledrive = encodePath.Replace("ftp://intranet.appsgt.net:4200/", "http://appsgt.net:1234/document/");
+                                                //var encodePath1 = encodePath;
+                                                string googledrive = encodePath.Replace("ftp://intranet.appsgt.net:4200/", "http://appsgt.net:1234/document/");
 
-                                        encodePath = encodePath.Replace(":", "aabbccddee");
-                                        encodePath = encodePath.Replace("/", "asdfghjkl");
-                                        encodePath = encodePath.Replace("+", "aqwsedrf");
-                                    }
-                                    <a href="@Url.Action("downFile", "Home",new { path = encodePath })" target="_blank">
-                                        <img src="@Url.Content("~/Content/image/download_icon.png")" width="32" height="32" title="Download" />
-                                    </a>
-                                    @if (ext == "jpg")
-                                    {
+                                                encodePath = encodePath.Replace(":", "aabbccddee");
+                                                encodePath = encodePath.Replace("/", "asdfghjkl");
+                                                encodePath = encodePath.Replace("+", "aqwsedrf");
+                                            }
+                                            <a href="@Url.Action("downFile", "Home",new { path = encodePath })" target="_blank">
+                                                <img src="@Url.Content("~/Content/image/download_icon.png")" width="32" height="32" title="Download" />
+                                            </a>
+                                            @if (ext == "jpg" || ext == "jpeg" || ext == "png")
+                                            {
 
-                                        <a href="@Url.Action("readFile", "Home",new { path = encodePath })" target="_blank">
-                                            @*<img src="~/Content/image/@sIcon" alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />*@
-                                            <img src="@googledrive" class="thumbImage" data-id="@googledrive" style="width: 32px;height: 32px; border: none" title="Xem file" />
+                                                <a href="@Url.Action("readFile", "Home",new { path = encodePath })" target="_blank">
+                                                    @*<img src="~/Content/image/@sIcon" alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />*@
+                                                    <img src="@googledrive" class="thumbImage" data-id="@googledrive" style="width: 32px;height: 32px; border: none" title="Xem file" />
 
-                                            <span>@file.FileName</span>
-                                        </a>
+                                                    <span>@file.FileName</span>
+                                                </a>
 
-                                    }
-                                    else
-                                    {
-                                        <a href="@Url.Action("readFile", "Home",new { path = encodePath })" target="_blank">
-                                            <img src="~/Content/image/@sIcon" alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />
-                                            @*<img src="@googledrive" alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />*@
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("readFile", "Home",new { path = encodePath })" target="_blank">
+                                                    <img src="~/Content/image/@sIcon" alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />
+                                                    @*<img src="@googledrive" alt="Folder Logo" align="top" style="width: 32px;height: 32px; border: none" title="Xem file" />*@
 
-                                            <span>@file.FileName</span>
-                                        </a>
-                                    }
+                                                    <span>@file.FileName</span>
+                                                </a>
+                                            }
 
-                                </div>
+                                        </div>
 
 
-                                <div class="col-md-2">
-                                    @file.FileSizeText
-                                </div>
-                            </div>
+                                        <div class="col-md-2">
+                                            @file.FileSizeText
+                                        </div>
+                                    </div>
                                 }
 
                             }
